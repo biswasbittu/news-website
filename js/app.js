@@ -6,31 +6,31 @@ const loadNewsCatagorisData = async () => {
 
 const showCatagories = data => {
     // console.log(data)
-
-    const newsCatagorisContainer = document.getElementById('news-catagoris-container');
+    // console.log(data)
+    const catagoriesContainer = document.getElementById('news-catagoris-container');
     data.news_category.forEach(singleCatagories => {
-        // console.log(singleCatagories.category_name);
-        newsCatagorisContainer.innerHTML += `<a class="nav-link" href="#" onclick="fetchCatagoryNews('${singleCatagories.category_id},'${singleCatagories.category_name}')">
-        ${singleCatagories.category_name}</a>`
+        // console.log(singleCatagories);
+        let linkContainer = document.createElement('p');
+        linkContainer.innerHTML = `<a class="nav-link fw-bold" href="#" onclick="fatchCatago('${singleCatagories.category_id}','${singleCatagories.category_name}')">${singleCatagories.category_name}</a>`;
+        catagoriesContainer.appendChild(linkContainer);
 
     })
 }
 
-const fetchCatagoryNews =async (category_id,category_name) => {
-    //   console.log(category_id);
-    const url =  `https://openapi.programming-hero.com/api/news/category/${category_id}`;
-    fetch(await  (url))
-    .then(await (res => res.json()))
-    .then(data=>{
-        showAllNews(data,category_name);
 
+
+// fatch all news ablable..........
+const fatchCatago = (category_id,category_name) => {
+    
+    const url = `https://openapi.programming-hero.com/api/news/category/${category_id}`
+    fetch(url).then(res => res.json()).then(data => {
+        showAllNews(data.data,category_name)
     })
-
 }
 
 const showAllNews=(data,category_name)=>{
-    console.log(data,category_name)
+    // console.log(data);
+    document.getElementById('news-count').innerText=`${data.length}`
+    document.getElementById('catagory-name').innerText=`${category_name}`
+
 }
-
-
-
